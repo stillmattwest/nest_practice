@@ -21,14 +21,15 @@ interface User {
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
   @Get() // GET /users or /users?role=value
-  findAll(@Query('role') role?: 'INTERN' | 'ENGINEER' | 'ADMIN') {
-    return this.usersService.findAll(role);
+  findAll(@Query('role') role?: Role): User[] {
+    return this.usersService.findAll(role? role.toUpperCase() as Role: undefined);
   }
 
   @Get(':id') // GET /users/:id
-  findOne(@Param('id') id: number) {
-    return this.usersService.findOne(id);
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
   }
 
   @Post() // POST /users
@@ -38,14 +39,14 @@ export class UsersController {
 
   @Patch(':id') // PATCH /users/:id
   update(
-    @Param(':id') id: number, // Use ParseIntPipe to convert string param to number
-    @Body() user: User, // Define the 'User' type properly
+    @Param('id') id: string, 
+    @Body() user: User, 
   ): User {
-    return this.usersService.update(id, user);
+    return this.usersService.update(+id, user);
   }
 
   @Delete(':id') // DELETE /users/:id
-  remove(@Param('id') id: number): User {
-    return this.usersService.delete(id);
+  remove(@Param('id') id: string): User {
+    return this.usersService.delete(+id);
   }
 }

@@ -10,9 +10,15 @@ interface User {
 }
 @Injectable()
 export class UsersService {
-  private users = userData;
+  users: User[];
+    constructor() {
+        this.users = userData.map((user) => {
+            const userRole = user.role as Role;
+            return { ...user, role: userRole } as User;
+        });
+    }
 
-  findAll(role?: Role): {}[] {
+  findAll(role?: Role): User[] {
     return role ? this.users.filter((user) => user.role === role) : this.users;
   }
 
@@ -32,11 +38,11 @@ export class UsersService {
 
   update(
     id: number,
-    userUpdate: { id: number; name: string; email: string; role: Role },
+    user: User,
   ): User {
     const userIndex = this.users.findIndex((user) => user.id === id);
-    this.users[userIndex] = { ...this.users[userIndex], ...userUpdate };
-    const updatedUser = this.users[userIndex];
+    const updatedUser = { ...this.users[userIndex], ...user };
+    this.users[userIndex] = updatedUser;
     const userRole = updatedUser.role as Role;
     const updatedUserWithRole = { ...updatedUser, role: userRole };
     return updatedUserWithRole;

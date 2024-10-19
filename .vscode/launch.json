@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch NestJS",
+        "skipFiles": ["<node_internals>/**"],
+        "program": "${workspaceFolder}/dist/main.js", // Point to the compiled JavaScript
+        "preLaunchTask": "npm: build", // Run the build script before launching
+        "outFiles": ["${workspaceFolder}/dist/**/*.js"], // Adjust if needed
+        "sourceMaps": true, // Enable source maps for TypeScript debugging
+        "autoAttachChildProcesses": true
+      }
+    ]
+  }
+  
