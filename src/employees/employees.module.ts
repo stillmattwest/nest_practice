@@ -3,9 +3,8 @@ import { EmployeesService } from './employees.service';
 import { EmployeesController } from './employees.controller';
 import { DatabaseModule } from 'src/database/database.module';
 
-
 @Module({
-  imports: [DatabaseModule],
+  imports:[DatabaseModule],
   controllers: [EmployeesController],
   providers: [EmployeesService],
 })
